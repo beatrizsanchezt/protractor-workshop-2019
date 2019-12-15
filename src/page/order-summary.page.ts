@@ -1,13 +1,16 @@
-import { $, ElementFinder } from "protractor";
+import {
+  $,
+  ElementFinder,
+} from "protractor";
 
 export class OrderSummaryPage {
-  private proceedToCheckOutOption: ElementFinder;
+  private confirmationMessage: ElementFinder;
 
   constructor() {
-    this.proceedToCheckOutOption = $(".cart_navigation span");
+    this.confirmationMessage = $('#center_column > div > p > strong');
   }
 
-  public async proceedToCheckOut(): Promise<void> {
-    await this.proceedToCheckOutOption.click();
+  public async ConfirmationMessage(): Promise<String> {
+    return this.confirmationMessage.getText();
   }
 }

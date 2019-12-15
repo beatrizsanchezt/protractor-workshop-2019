@@ -1,44 +1,68 @@
 import { browser } from "protractor";
-import { MenuContentPage } from "../src/page";
-import { ProductListPage } from "../src/page";
-import { ProductAddedModalPage } from "../src/page";
-import { OrderSummaryPage } from "../src/page";
-import { SignInStepPage } from "../src/page";
-import { AddressStepPage } from "../src/page";
-import { ShippingStepPage } from "../src/page";
-import { PaymentStepPage } from "../src/page";
-import { BankPaymentPage } from "../src/page";
-import { SummaryStepPage } from "../src/page";
+import {
+  MenuContentPage,
+  ProductListPage,
+  ProductAddedModalPage,
+  SummaryStepPage,
+  SignInStepPage,
+  AddressStepPage,
+  ShippingStepPage,
+  PaymentStepPage,
+  BankPaymentPage,
+  OrderSummaryPage,
+} from "../src/page";
 
-describe("Buy a t-shirt", () => {
+describe("Given I´m a non authenticated user", () => {
   const menuContentPage: MenuContentPage = new MenuContentPage();
   const productListPage: ProductListPage = new ProductListPage();
   const productAddedModalPage: ProductAddedModalPage = new ProductAddedModalPage();
-  const orderSummaryPage: OrderSummaryPage = new OrderSummaryPage();
+  const summaryStepPage: SummaryStepPage = new SummaryStepPage();
   const signInStepPage: SignInStepPage = new SignInStepPage();
   const addressStepPage: AddressStepPage = new AddressStepPage();
   const shippingStepPage: ShippingStepPage = new ShippingStepPage();
   const paymentStepPage: PaymentStepPage = new PaymentStepPage();
   const bankPaymentPage: BankPaymentPage = new BankPaymentPage();
-  const summaryStepPage: SummaryStepPage = new SummaryStepPage();
+  const orderSummaryPage: OrderSummaryPage = new OrderSummaryPage();
 
-  it("then should be bought a t-shirt", async () => {
-    await browser.get("http://automationpractice.com/");
+  describe("When I navigate to the store web site", async () => {
+    beforeAll(async () => {
+      browser.driver.manage().window().setSize(1800, 2024);
+      await browser.get("http://automationpractice.com/");
+    });
 
-    await menuContentPage.goToTShirtMenu();
-    //await(browser.sleep(3000));
-    await productListPage.tShirtAddToCart();
-    //await(browser.sleep(3000));
-    await productAddedModalPage.proceedToCheckOut();
-    //await(browser.sleep(3000));
-    await orderSummaryPage.proceedToCheckOut();
-    await signInStepPage.signIn();
-    await addressStepPage.proceedToCheckOut();
-    await shippingStepPage.proceedToCheckOut();
-    await paymentStepPage.bankPayment();
-    await bankPaymentPage.confirmOrder();
-    await expect(summaryStepPage.ConfirmationMessage).toBe(
-      "Your order on My Store is complete."
-    );
+    describe("and I select a T-Shirt to buy", async () => {
+      beforeAll(async () => {
+        await menuContentPage.goToTShirtMenu();
+        await productListPage.tShirtAddToCart();
+        await productAddedModalPage.proceedToCheckOut();
+        await summaryStepPage.proceedToCheckOut();
+      });
+
+      describe("and I log in", async () => {
+        beforeAll(async () => {
+          await signInStepPage.signIn();
+        });
+
+        describe("and I select my address", async () => {
+          beforeAll(async () => {
+            await addressStepPage.proceedToCheckOut();
+            await shippingStepPage.proceedToCheckOut();
+          });
+
+          describe("and I pay", async () => {
+            beforeAll(async () => {
+              await paymentStepPage.bankPayment();
+            });
+
+            it("then I should receive a confirmation message", async () => {
+              await bankPaymentPage.confirmOrder();
+              expect(orderSummaryPage.ConfirmationMessage()).toBe(
+                "Your order on My Store is complete."
+              );
+            });
+          });
+        });
+      });
+    });
   });
 });

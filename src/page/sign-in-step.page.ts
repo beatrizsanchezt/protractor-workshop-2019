@@ -1,4 +1,9 @@
-import { $, ElementFinder } from "protractor";
+import {
+  $,
+  element,
+  by,
+  ElementFinder,
+} from "protractor";
 
 export class SignInStepPage {
   private emailInput: ElementFinder;
@@ -6,9 +11,9 @@ export class SignInStepPage {
   private submmitOption: ElementFinder;
 
   constructor() {
-    this.emailInput = $("#email");
+    this.emailInput = element(by.id("email"));
     this.passwordInput = $("#passwd");
-    this.submmitOption = $("#SubmitLogin > span");
+    this.submmitOption = element(by.buttonText("Sign in"));
   }
 
   public async signIn(): Promise<void> {

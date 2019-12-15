@@ -1,12 +1,12 @@
-import { $, ElementFinder, browser } from "protractor";
+import { element, by, ElementFinder, browser } from "protractor";
 
 export class ShippingStepPage {
   private termsOfUSeOption: ElementFinder;
   private proceedToCheckOutOption: ElementFinder;
 
   constructor() {
-    this.termsOfUSeOption = $("#cgv");
-    this.proceedToCheckOutOption = $("#form > p > button > span");
+    this.termsOfUSeOption = element(by.id("cgv"));
+    this.proceedToCheckOutOption = element(by.cssContainingText('button', 'Proceed to checkout'));
   }
 
   public async proceedToCheckOut(): Promise<void> {
