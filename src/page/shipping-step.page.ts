@@ -1,4 +1,4 @@
-import { element, by, ElementFinder, browser } from "protractor";
+import { element, by, ElementFinder } from "protractor";
 
 export class ShippingStepPage {
   private termsOfUSeOption: ElementFinder;
@@ -10,8 +10,7 @@ export class ShippingStepPage {
   }
 
   public async proceedToCheckOut(): Promise<void> {
-    this.termsOfUSeOption.click();
-    await browser.sleep(3000);
+    await this.termsOfUSeOption.click();
     await this.proceedToCheckOutOption.click();
   }
 }

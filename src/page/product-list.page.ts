@@ -15,8 +15,8 @@ export class ProductListPage {
 
     var expectedCondition = ExpectedConditions;
     await browser.actions().mouseMove(this.productOption).perform();
-    var isClickable = expectedCondition.visibilityOf(this.tShirtAddToCartOption);
-    await browser.wait(isClickable, 5000);
+    var isVisible = expectedCondition.visibilityOf(this.tShirtAddToCartOption);
+    await browser.wait(isVisible, 5000);
     await this.tShirtAddToCartOption.click();
   }
 }

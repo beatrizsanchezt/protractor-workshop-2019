@@ -1,5 +1,6 @@
 import {
-  element, by,
+  element,
+  by,
   ElementFinder,
   ExpectedConditions,
   browser
@@ -9,7 +10,7 @@ export class BankPaymentPage {
   private confirmOrderOption: ElementFinder;
 
   constructor() {
-    this.confirmOrderOption = element(by.buttonText('I confirm my order'));
+    this.confirmOrderOption = element(by.buttonText("I confirm my order"));
   }
 
   public async confirmOrder(): Promise<void> {

@@ -1,5 +1,6 @@
 import {
-  element, by,
+  element,
+  by,
   ElementFinder,
   ExpectedConditions,
   browser
@@ -9,9 +10,7 @@ export class PaymentStepPage {
   private bankPaymentOption: ElementFinder;
 
   constructor() {
-    this.bankPaymentOption =  element(by.partialLinkText('Pay by bank wire'));
-
-    //this.bankPaymentOption = $('#HOOK_PAYMENT > div:nth-child(1) > div > p > a');
+    this.bankPaymentOption = element(by.partialLinkText("Pay by bank wire"));
   }
 
   public async bankPayment(): Promise<void> {
