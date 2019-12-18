@@ -9,7 +9,7 @@ import {
   ShippingStepPage,
   PaymentStepPage,
   BankPaymentPage,
-  OrderSummaryPage,
+  OrderSummaryPage
 } from "../src/page";
 
 describe("Given I´m a non authenticated user", () => {
@@ -26,14 +26,17 @@ describe("Given I´m a non authenticated user", () => {
 
   describe("When I navigate to the store web site", async () => {
     beforeAll(async () => {
-      browser.driver.manage().window().setSize(1800, 2024);
+      browser.driver
+        .manage()
+        .window()
+        .setSize(1800, 2024);
       await browser.get("http://automationpractice.com/");
     });
 
     describe("and I select a T-Shirt to buy", async () => {
       beforeAll(async () => {
-        await menuContentPage.goToTShirtMenu();
-        await productListPage.tShirtAddToCart();
+        await menuContentPage.selectOptionMenu("T-SHIRTS");
+        await productListPage.AddToCartProduct('Faded Short Sleeve T-shirts');
         await productAddedModalPage.proceedToCheckOut();
         await summaryStepPage.proceedToCheckOut();
       });
