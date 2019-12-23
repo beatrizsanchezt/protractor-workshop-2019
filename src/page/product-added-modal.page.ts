@@ -1,4 +1,6 @@
-import { element, by, ElementFinder, ExpectedConditions, browser } from "protractor";
+import {
+  element, by, ElementFinder, ExpectedConditions, browser,
+} from 'protractor';
 
 export class ProductAddedModalPage {
   private proceedToCheckOutOption: ElementFinder;
@@ -8,9 +10,9 @@ export class ProductAddedModalPage {
   }
 
   public async proceedToCheckOut(): Promise<void> {
-    var expectedCondition = ExpectedConditions;
-    var isClickable = expectedCondition.elementToBeClickable(this.proceedToCheckOutOption);
-    await browser.wait(isClickable, 3000);
+    const expectedCondition = ExpectedConditions;
+    const isClickable = expectedCondition.elementToBeClickable(this.proceedToCheckOutOption);
+    await browser.wait(isClickable, 3000, 'Proceed to checkout is not clickable.');
     await this.proceedToCheckOutOption.click();
   }
 }

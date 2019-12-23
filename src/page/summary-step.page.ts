@@ -1,4 +1,4 @@
-import { element, by, ElementFinder } from "protractor";
+import { element, by, ElementFinder } from 'protractor';
 
 export class SummaryStepPage {
   private proceedToCheckOutOption: ElementFinder;

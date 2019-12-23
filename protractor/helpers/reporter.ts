@@ -1,9 +1,9 @@
 export let reporter = () => {
-  const { AwesomeReport } = require("jasmine-awesome-report");
+  const { AwesomeReport } = require('jasmine-awesome-report');
 
   const config = {
-    fullPath: "reports",
-    fileName: "awesome",
+    fullPath: 'reports',
+    fileName: 'awesome',
     merge: true
   };
 

@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf dist && rm -rf reports",
-    "build": "npm run clean && tsc",
+    "build": "npm run lint && npm run clean && tsc",
     "test:local": "npm run build && protractor dist/protractor/local.config.js",
     "test:headless": "npm run build && protractor dist/protractor/headless.config.js",
     "test": "npm run test:headless",
-    "postinstall": "webdriver-manager update --gecko false"
+    "postinstall": "webdriver-manager update --gecko false",
+    "lint": "tslint --project tsconfig.json protractor/**/*.ts test/**/*.ts src/**/*.ts"
   },
   "repository": {
     "type": "git",
@@ -29,17 +30,14 @@
   "homepage": "https://github.com/12358-lab/protractor-workshop-2019#readme",
   "dependencies": {
     "jasmine-spec-reporter": "^4.2.1",
-    "protractor": "^5.4.2"
+    "protractor": "^5.4.2",
+    "tslint-config-airbnb": "^5.11.2"
   },
   "devDependencies": {
     "@types/jasminewd2": "^2.0.8",
     "@types/node": "^12.12.17",
-    "@typescript-eslint/eslint-plugin": "^2.11.0",
-    "@typescript-eslint/parser": "^2.11.0",
-    "eslint": "^6.7.2",
-    "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.19.1",
     "jasmine-awesome-report": "0.0.3",
-    "typescript": "~3.6"
+    "tslint": "^5.20.1",
+    "typescript": "^3.6.4"
   }
 }

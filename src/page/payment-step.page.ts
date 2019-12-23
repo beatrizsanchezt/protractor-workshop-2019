@@ -3,22 +3,22 @@ import {
   by,
   ElementFinder,
   ExpectedConditions,
-  browser
-} from "protractor";
+  browser,
+} from 'protractor';
 
 export class PaymentStepPage {
   private bankPaymentOption: ElementFinder;
 
   constructor() {
-    this.bankPaymentOption = element(by.partialLinkText("Pay by bank wire"));
+    this.bankPaymentOption = element(by.partialLinkText('Pay by bank wire'));
   }
 
   public async bankPayment(): Promise<void> {
-    var expectedCondition = ExpectedConditions;
-    var isClickable = expectedCondition.elementToBeClickable(
-      this.bankPaymentOption
+    const expectedCondition = ExpectedConditions;
+    const isClickable = expectedCondition.elementToBeClickable(
+      this.bankPaymentOption,
     );
-    await browser.wait(isClickable, 3000);
+    await browser.wait(isClickable, 3000, 'Pay by bank wire is not clickable.');
 
     await this.bankPaymentOption.click();
   }
