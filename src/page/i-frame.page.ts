@@ -1,4 +1,4 @@
-import { element, by, browser, ElementFinder, promise } from 'protractor';
+import { element, by, $, browser, ElementFinder, promise } from 'protractor';
 
 export class IFramePage {
 
@@ -14,5 +14,19 @@ export class IFramePage {
 
   public setFormFrameHeight(height: number): promise.Promise<void> {
     return browser.executeScript(`arguments[0].height = ${height};`, this.iframe1);
+  }
+
+  public async getPageTitle() {
+    let titleElement : ElementFinder;
+    titleElement = await $('#content h1');
+    return await titleElement.getText();
+  }
+
+  public async switchToFrame(): Promise<void> {
+    await browser.switchTo().frame(this.iframe1.getWebElement());
+  }
+
+  public async switchToMainPage(): Promise<void> {
+    await browser.switchTo().defaultContent();
   }
 }
