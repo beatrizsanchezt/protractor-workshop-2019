@@ -1,11 +1,12 @@
 export { AddressStepPage } from './address-step.page';
 export { BankPaymentPage } from './bank-payment.page';
+export { IFramePage } from './i-frame.page';
 export { MenuContentPage } from './menu-content.page';
 export { OrderSummaryPage } from './order-summary.page';
 export { PaymentStepPage } from './payment-step.page';
-export { Continents, SeleniumCommands, PersonalInformationPage } from './personal-information.page';
-export { ProductListPage } from './product-list.page';
+export { PersonalInformationPage, Continents, SeleniumCommands } from './personal-information.page';
 export { ProductAddedModalPage } from './product-added-modal.page';
+export { ProductListPage } from './product-list.page';
 export { ShippingStepPage } from './shipping-step.page';
 export { SignInStepPage } from './sign-in-step.page';
 export { SummaryStepPage } from './summary-step.page';

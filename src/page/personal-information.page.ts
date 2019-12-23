@@ -83,10 +83,9 @@ export class PersonalInformationPage {
     await this.selectByValue(profession);
     tools.forEach(async item => await this.selectByValue(item));
     await this.selectContinent(continent);
-    let item : any;
-    for (item in commands) {
-      await this.selectCommands(commands[item]);
-    }
+    const promises = commands.map(command => this.selectCommands(command));
+    await Promise.all(promises);
+
     await browser.executeScript(
       'arguments[0].click();',
       this.firstButton.getWebElement(),
