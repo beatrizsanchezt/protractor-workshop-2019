@@ -62,6 +62,24 @@ export class PersonalInformationPage {
     await command.click();
   }
 
+  private async submit() {
+    await browser.executeScript(
+      'arguments[0].click();',
+      this.firstButton.getWebElement());
+  }
+
+  private uploadFile (filePath : string) {
+    const path = require('path');
+    const absolutePath = path.resolve(__dirname, filePath);
+
+    const fileButton = element(by.css('input[type="file"]'));
+    fileButton.sendKeys(absolutePath);
+  }
+
+  public async uploadPicture (file: string) {
+    this.uploadFile(file);
+  }
+
   public async fillForm(
     firstName: string,
     lastName: string,
@@ -71,6 +89,7 @@ export class PersonalInformationPage {
     tools: string[],
     continent: Continents,
     commands: SeleniumCommands[],
+    file: string,
   ): Promise<void> {
     const expectedCondition = ExpectedConditions;
     const isVisible = expectedCondition.visibilityOf(this.closeAddOption);
@@ -85,10 +104,7 @@ export class PersonalInformationPage {
     await this.selectContinent(continent);
     const promises = commands.map(command => this.selectCommands(command));
     await Promise.all(promises);
-
-    await browser.executeScript(
-      'arguments[0].click();',
-      this.firstButton.getWebElement(),
-    );
+    await this.uploadFile(file);
+    await this.submit();
   }
 }

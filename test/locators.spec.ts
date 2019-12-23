@@ -12,7 +12,8 @@ describe('Given I´m a Protractor learner', () => {
       .maximize();
       await browser.get('http://toolsqa.com/automation-practice-form/');
     });
-    it('then I should receive a confirmation message', async () => {
+
+    it('then I should receive a confirmation', async () => {
       await personalInformationPage.fillForm(
         'Alejandro',
         'Perdomo',
@@ -25,7 +26,8 @@ describe('Given I´m a Protractor learner', () => {
           SeleniumCommands['Navigation Commands'],
           SeleniumCommands['Switch Commands'],
           SeleniumCommands['Wait Commands'],
-          SeleniumCommands['WebElement Commands']]
+          SeleniumCommands['WebElement Commands']],
+        '../../../resources/betyIcon.jpg',
       );
       const url = await browser.getCurrentUrl();
       expect(url).toContain('firstname=Alejandro');
@@ -39,6 +41,7 @@ describe('Given I´m a Protractor learner', () => {
       expect(url).toContain('Switch+Commands');
       expect(url).toContain('Wait+Commands');
       expect(url).toContain('WebElement+Commands');
+      expect(url).toContain('photo=betyIcon.jpg');
       expect(url).toContain('submit');
     });
   });
