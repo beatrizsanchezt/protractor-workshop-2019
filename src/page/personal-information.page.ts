@@ -7,6 +7,8 @@ import {
   ExpectedConditions,
 } from 'protractor';
 
+import { DownloadService, FileService } from '../../src/service';
+
 export enum Continents {
   'Asia' = 'AS',
   'Europe' = 'EU',
@@ -31,7 +33,9 @@ export class PersonalInformationPage {
   private continentDropDown: ElementFinder;
   private commandsMultiSelect: ElementFinder;
   private firstButton: ElementFinder;
-  private closeAddOption: ElementFinder;
+  private linkTestFile: ElementFinder;
+  private downloadService = new DownloadService();
+  private fileService = new FileService();
 
   constructor() {
     this.firstName = element(by.name('firstname'));
@@ -39,7 +43,7 @@ export class PersonalInformationPage {
     this.continentDropDown = element(by.id('continents'));
     this.commandsMultiSelect = element(by.id('selenium_commands'));
     this.firstButton = $('#submit');
-    this.closeAddOption = $('[alt=close-link]');
+    this.linkTestFile = element(by.linkText('Test File to Download'));
   }
 
   private async selectByValue(value: string | number) {
@@ -69,15 +73,22 @@ export class PersonalInformationPage {
   }
 
   private uploadFile (filePath : string) {
-    const path = require('path');
-    const absolutePath = path.resolve(__dirname, filePath);
-
-    const fileButton = element(by.css('input[type="file"]'));
-    fileButton.sendKeys(absolutePath);
+    const fileValid = this.fileService.validateFile(filePath);
+    if (fileValid) {
+      const fileButton = element(by.css('input[type="file"]'));
+      fileButton.sendKeys(`${process.cwd()}/${filePath}`);
+      console.log(`${process.cwd()}/${filePath}`);
+    }
   }
 
-  public async uploadPicture (file: string) {
-    this.uploadFile(file);
+  public async download () {
+    const expectedCondition = ExpectedConditions;
+    const isVisible = expectedCondition.visibilityOf(this.linkTestFile);
+    const fileName = 'test.xlsx';
+    await browser.wait(isVisible, 30000, 'Link to download file is not visible.');
+    const link = await this.linkTestFile.getAttribute('href');
+    await this.downloadService.downloadFile(link, fileName);
+    return this.downloadService.readFileFromTemp(fileName);
   }
 
   public async fillForm(
@@ -89,12 +100,8 @@ export class PersonalInformationPage {
     tools: string[],
     continent: Continents,
     commands: SeleniumCommands[],
-    file: string,
+    file?: string,
   ): Promise<void> {
-    const expectedCondition = ExpectedConditions;
-    const isVisible = expectedCondition.visibilityOf(this.closeAddOption);
-    await browser.wait(isVisible, 30000, 'Add close option is not visible.');
-    await this.closeAddOption.click();
     await this.firstName.sendKeys(firstName);
     await this.lastName.sendKeys(lastName);
     await this.selectByValue(sex);

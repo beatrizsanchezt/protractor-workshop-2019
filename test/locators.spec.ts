@@ -27,7 +27,7 @@ describe('Given I´m a Protractor learner', () => {
           SeleniumCommands['Switch Commands'],
           SeleniumCommands['Wait Commands'],
           SeleniumCommands['WebElement Commands']],
-        '../../../resources/betyIcon.jpg',
+        '/resources/betyIcon.jpg',
       );
       const url = await browser.getCurrentUrl();
       expect(url).toContain('firstname=Alejandro');
@@ -43,6 +43,11 @@ describe('Given I´m a Protractor learner', () => {
       expect(url).toContain('WebElement+Commands');
       expect(url).toContain('photo=betyIcon.jpg');
       expect(url).toContain('submit');
+    });
+    it('then I should download a file', async () => {
+      let tempBuffer = '';
+      tempBuffer = (await personalInformationPage.download()).toString();
+      expect(tempBuffer).not.toBe('');
     });
   });
 });
