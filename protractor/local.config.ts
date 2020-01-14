@@ -1,12 +1,10 @@
 import { Config, browser } from 'protractor';
 import { reporter } from './helpers/reporter';
-import { FileService } from '../src/service';
 
 require('dotenv').config();
 
 const path = require('path');
 const downloadsPath = path.resolve(__dirname, '../../temp');
-const fileService: FileService = new FileService();
 
 export const config: Config = {
   framework: 'jasmine',
@@ -20,7 +18,6 @@ export const config: Config = {
       .manage()
       .timeouts()
       .implicitlyWait(0);
-    fileService.cleanFolder('/temp');
   },
   jasmineNodeOpts: {
     defaultTimeoutInterval: 120000

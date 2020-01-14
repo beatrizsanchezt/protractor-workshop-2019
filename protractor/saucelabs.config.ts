@@ -1,15 +1,28 @@
 import { Config, browser } from 'protractor';
 import { reporter } from './helpers/reporter';
-import { FileService } from '../src/service';
 
 require('dotenv').config();
 
-const path = require('path');
-const downloadsPath = path.resolve(__dirname, '../../temp');
-const fileService: FileService = new FileService();
+const firefoxConfig = {
+  browserName: 'firefox',
+  platform: 'linux',
+  name: 'firefox-tests',
+  shardTestFiles: true,
+  maxInstances: 1
+};
+
+const chromeConfig = {
+  browserName: 'chrome',
+  name: 'chrome-tests',
+  shardTestFiles: true,
+  maxInstances: 1,
+};
+
+const multiCapabilities = [chromeConfig, firefoxConfig];
 const configVar = require('config');
 
 export const config: Config = {
+  multiCapabilities,
   directconnect: true,
   framework: 'jasmine',
   SELENIUM_PROMISE_MANAGER: false,
@@ -22,29 +35,9 @@ export const config: Config = {
       .manage()
       .timeouts()
       .implicitlyWait(0);
-    fileService.cleanFolder('/temp');
   },
   jasmineNodeOpts: {
     defaultTimeoutInterval: 120000
-  },
-  capabilities: {
-    name: 'UI Workshop',
-    browserName: 'chrome',
-    chromeOptions: {
-      args: [
-        '--disable-popup-blocking',
-        '--no-default-browser-check',
-        '--window-size=800,600'
-      ],
-      prefs: { credentials_enable_service: false,
-        'plugins.always_open_pdf_externally': true,
-        download: {
-          prompt_for_download: false,
-          directory_upgrade: true,
-          default_directory: downloadsPath,
-        }
-      }
-    },
   },
   sauceUser: configVar.sauceUser,
   sauceKey: configVar.sauceKey,
