@@ -13,7 +13,7 @@ describe('Given that I´m a Protractor learner', () => {
       await browser.get('http://toolsqa.com/automation-practice-form/');
     });
 
-    xit('then I should receive a confirmation', async () => {
+    it('then I should receive a confirmation', async () => {
       const personalInformationPage = new PersonalInformationPage();
       await personalInformationPage.fillForm(
         'Alejandro',
