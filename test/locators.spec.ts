@@ -1,19 +1,20 @@
 import { browser } from 'protractor';
 import { Continents, SeleniumCommands, PersonalInformationPage } from '../src/page';
 
-describe('Given I´m a Protractor learner', () => {
-  const personalInformationPage: PersonalInformationPage = new PersonalInformationPage();
-
+describe('Given that I´m a Protractor learner', () => {
   describe('When I navigate to the practice page', () => {
-    beforeEach(async () => {
+    beforeAll(async () => {
+      const remote = require('selenium-webdriver/remote');
       browser.driver
       .manage()
       .window()
       .maximize();
+      browser.setFileDetector(new remote.FileDetector());
       await browser.get('http://toolsqa.com/automation-practice-form/');
     });
 
-    it('then I should receive a confirmation', async () => {
+    xit('then I should receive a confirmation', async () => {
+      const personalInformationPage = new PersonalInformationPage();
       await personalInformationPage.fillForm(
         'Alejandro',
         'Perdomo',
@@ -27,7 +28,7 @@ describe('Given I´m a Protractor learner', () => {
           SeleniumCommands['Switch Commands'],
           SeleniumCommands['Wait Commands'],
           SeleniumCommands['WebElement Commands']],
-        '/resources/betyIcon.jpg',
+        'resources/betyIcon.jpg',
       );
       const url = await browser.getCurrentUrl();
       expect(url).toContain('firstname=Alejandro');
@@ -44,10 +45,19 @@ describe('Given I´m a Protractor learner', () => {
       expect(url).toContain('photo=betyIcon.jpg');
       expect(url).toContain('submit');
     });
-    it('then I should download a file', async () => {
-      let tempBuffer = '';
-      tempBuffer = (await personalInformationPage.download()).toString();
-      expect(tempBuffer).not.toBe('');
+
+    describe('and I click on the download link', () => {
+      let fileExists;
+      const personalInformationPage = new PersonalInformationPage();
+
+      beforeEach(async () => {
+        await personalInformationPage.download();
+      });
+
+      it('then the xlsx file should be downloaded', async () => {
+        fileExists = personalInformationPage.validateFileDownloaded();
+        expect(fileExists).toBe(true);
+      });
     });
   });
 });

@@ -7,8 +7,10 @@ require('dotenv').config();
 const path = require('path');
 const downloadsPath = path.resolve(__dirname, '../../temp');
 const fileService: FileService = new FileService();
+const configVar = require('config');
 
 export const config: Config = {
+  directconnect: true,
   framework: 'jasmine',
   SELENIUM_PROMISE_MANAGER: false,
   specs: ['../test/**/*.spec.js'],
@@ -26,6 +28,7 @@ export const config: Config = {
     defaultTimeoutInterval: 120000
   },
   capabilities: {
+    name: 'UI Workshop',
     browserName: 'chrome',
     chromeOptions: {
       args: [
@@ -42,5 +45,8 @@ export const config: Config = {
         }
       }
     },
-  }
+  },
+  sauceUser: configVar.sauceUser,
+  sauceKey: configVar.sauceKey,
+  sauceRegion: configVar.sauceRegion
 };

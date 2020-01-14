@@ -1,5 +1,6 @@
 import { Config, browser } from 'protractor';
 import { reporter } from './helpers/reporter';
+require('dotenv').config();
 
 export const config: Config = {
   framework: 'jasmine',

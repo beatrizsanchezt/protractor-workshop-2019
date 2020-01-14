@@ -7,7 +7,7 @@ import {
   ExpectedConditions,
 } from 'protractor';
 
-import { DownloadService, FileService } from '../../src/service';
+import { FileService } from '../../src/service';
 
 export enum Continents {
   'Asia' = 'AS',
@@ -34,8 +34,9 @@ export class PersonalInformationPage {
   private commandsMultiSelect: ElementFinder;
   private firstButton: ElementFinder;
   private linkTestFile: ElementFinder;
-  private downloadService = new DownloadService();
+  private uploadFileButton: ElementFinder;
   private fileService = new FileService();
+  private downloadFileName = 'temp/test.xlsx';
 
   constructor() {
     this.firstName = element(by.name('firstname'));
@@ -72,23 +73,29 @@ export class PersonalInformationPage {
       this.firstButton.getWebElement());
   }
 
-  private uploadFile (filePath : string) {
+  private async uploadFile (filePath : string) {
     const fileValid = this.fileService.validateFile(filePath);
     if (fileValid) {
-      const fileButton = element(by.css('input[type="file"]'));
-      fileButton.sendKeys(`${process.cwd()}/${filePath}`);
-      console.log(`${process.cwd()}/${filePath}`);
+      const expectedCondition = ExpectedConditions;
+      this.uploadFileButton = element(by.css('.input-file'));
+      const isVisible = expectedCondition.visibilityOf(this.uploadFileButton);
+
+      await browser.wait(isVisible, 30000, 'Link to upload a file is not visible.');
+      await this.uploadFileButton.sendKeys(`${process.cwd()}\\${filePath}`);
     }
+  }
+
+  public validateFileDownloaded(): boolean {
+    return this.fileService.validateFile(this.downloadFileName);
   }
 
   public async download () {
     const expectedCondition = ExpectedConditions;
     const isVisible = expectedCondition.visibilityOf(this.linkTestFile);
-    const fileName = 'test.xlsx';
+
     await browser.wait(isVisible, 30000, 'Link to download file is not visible.');
     const link = await this.linkTestFile.getAttribute('href');
-    await this.downloadService.downloadFile(link, fileName);
-    return this.downloadService.readFileFromTemp(fileName);
+    await this.fileService.downloadFile(link, this.downloadFileName);
   }
 
   public async fillForm(
