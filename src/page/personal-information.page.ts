@@ -81,7 +81,7 @@ export class PersonalInformationPage {
       const isVisible = expectedCondition.visibilityOf(this.uploadFileButton);
 
       await browser.wait(isVisible, 30000, 'Link to upload a file is not visible.');
-      await this.uploadFileButton.sendKeys(`${process.cwd()}\\${filePath}`);
+      await this.uploadFileButton.sendKeys(`${process.cwd()}/${filePath}`);
     }
   }
 
