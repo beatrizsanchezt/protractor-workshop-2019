@@ -35,7 +35,7 @@ export class ProductListPage {
     const expectedCondition = ExpectedConditions;
     await this.selectProduct(productName);
     const isVisible = expectedCondition.visibilityOf(this.tShirtAddToCartOption);
-    await browser.wait(isVisible, 3000, 'Option for add the produt to the car is not visible.');
+    await browser.wait(isVisible, 30000, 'Option for add the produt to the car is not visible.');
     await this.tShirtAddToCartOption.click();
   }
 }

@@ -18,7 +18,7 @@ export class PaymentStepPage {
     const isClickable = expectedCondition.elementToBeClickable(
       this.bankPaymentOption,
     );
-    await browser.wait(isClickable, 3000, 'Pay by bank wire is not clickable.');
+    await browser.wait(isClickable, 30000, 'Pay by bank wire is not clickable.');
 
     await this.bankPaymentOption.click();
   }

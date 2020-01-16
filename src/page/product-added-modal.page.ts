@@ -12,7 +12,7 @@ export class ProductAddedModalPage {
   public async proceedToCheckOut(): Promise<void> {
     const expectedCondition = ExpectedConditions;
     const isClickable = expectedCondition.elementToBeClickable(this.proceedToCheckOutOption);
-    await browser.wait(isClickable, 3000, 'Proceed to checkout is not clickable.');
+    await browser.wait(isClickable, 30000, 'Proceed to checkout is not clickable.');
     await this.proceedToCheckOutOption.click();
   }
 }

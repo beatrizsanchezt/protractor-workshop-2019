@@ -18,7 +18,7 @@ export class BankPaymentPage {
     const isClickable = expectedCondition.elementToBeClickable(
       this.confirmOrderOption,
     );
-    await browser.wait(isClickable, 3000, 'Option for confirm the order is not clickable');
+    await browser.wait(isClickable, 30000, 'Option for confirm the order is not clickable');
     await this.confirmOrderOption.click();
   }
 }

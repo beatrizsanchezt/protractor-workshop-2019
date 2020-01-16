@@ -13,7 +13,7 @@ export class MenuContentPage {
     this.tShirtMenu = element(by.linkText(menu));
     const expectedCondition = ExpectedConditions;
     const isClickable = expectedCondition.elementToBeClickable(this.tShirtMenu);
-    await browser.wait(isClickable, 3000, `Menu option ${menu} is not clickable.`);
+    await browser.wait(isClickable, 30000, `Menu option ${menu} is not clickable.`);
     await this.tShirtMenu.click();
   }
 }

@@ -20,7 +20,7 @@ export class AddressStepPage {
     );
     await browser.wait(
       isClickable,
-      3000,
+      30000,
       'Proceed to checkout option is not clickable',
     );
     await this.proceedToCheckOutOption.click();
