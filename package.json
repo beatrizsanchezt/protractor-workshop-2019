@@ -4,9 +4,14 @@
   "description": "This is a Workshop about Protractor",
   "main": "index.js",
   "scripts": {
-    "clean": "rd /s /q dist 2>nul",
-    "build": "npm run clean && tsc",
-    "test": "npm run build && protractor dist/protractor/local.config.js"
+    "clean": "rm -rf dist && rm -rf reports && rm temp/*",
+    "build": "npm run lint && npm run clean && tsc",
+    "test:local": "npm run build && protractor dist/protractor/local.config.js",
+    "test:headless": "npm run build && protractor dist/protractor/headless.config.js",
+    "test:saucelabs": "npm run build && protractor dist/protractor/saucelabs.config.js",
+    "test": "npm run test:saucelabs",
+    "postinstall": "webdriver-manager update --gecko false",
+    "lint": "tslint --project tsconfig.json protractor/**/*.ts test/**/*.ts src/**/*.ts"
   },
   "repository": {
     "type": "git",
@@ -25,11 +30,19 @@
   },
   "homepage": "https://github.com/12358-lab/protractor-workshop-2019#readme",
   "dependencies": {
-    "protractor": "^5.4.2"
+    "config": "^3.2.4",
+    "dotenv": "^8.2.0",
+    "es6-promise": "^4.2.8",
+    "isomorphic-fetch": "^2.2.1",
+    "jasmine-spec-reporter": "^4.2.1",
+    "protractor": "^5.4.2",
+    "tslint-config-airbnb": "^5.11.2"
   },
   "devDependencies": {
     "@types/jasminewd2": "^2.0.8",
     "@types/node": "^12.12.17",
-    "typescript": "~3.6"
+    "jasmine-awesome-report": "0.0.3",
+    "tslint": "^5.20.1",
+    "typescript": "^3.6.4"
   }
 }
