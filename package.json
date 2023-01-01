@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/12358-lab/protractor-workshop-2019#readme",
   "dependencies": {
-    "config": "^3.2.4",
+    "config": "^3.3.8",
     "dotenv": "^8.2.0",
     "es6-promise": "^4.2.8",
     "isomorphic-fetch": "^2.2.1",
